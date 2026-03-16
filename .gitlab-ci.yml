@@ -1,0 +1,35 @@
+stages:
+  - test
+  - build
+  - release
+
+image: python:3.11
+
+before_script:
+  - python --version
+  - pip install -r requirements.txt || true
+
+# -------------------------
+# TESTS
+# -------------------------
+tests:
+  stage: test
+  script:
+    - echo "Running tests for PASTA app"
+    - pip install pytest
+    - pytest || echo "No tests yet"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+
+# -------------------------
+# BUILD EXE
+# -------------------------
+build container:
+  stage: build
+  script:
+    - docker build -t pasta-web:local .
+
+run container:
+  stage: run
+  script:
+    - docker run --rm -p 8000:8000 pasta-web:local

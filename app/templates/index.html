@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Sélection de Plats de Pâtes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Sélection de Plats de Pâtes</h1>
+    <form method="post">
+        <label for="dishes">Choisissez un ou plusieurs plats :</label><br>
+        <select name="dishes" id="dishes" multiple size="10">
+            {% for dish in dishes %}
+            <option value="{{ dish }}">{{ dish }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="num_people">Nombre de personnes :</label>
+        <input type="number" name="num_people" id="num_people" min="1" value="1"><br><br>
+
+        <button type="submit">Calculer les ingrédients</button>
+    </form>
+
+    <div class="result">
+        {{ result|safe }}
+    </div>
+</body>
+</html>

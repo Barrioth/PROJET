@@ -1,0 +1,8 @@
+Flask==2.3.3
+requests==2.31.0
+
+
+
+#sudo apt update
+#sudo apt install python3-tk
+#python3 "pyth pasta 0.2.py"
