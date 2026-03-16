@@ -2,19 +2,29 @@ stages:
   - test
   - build
   - release
-  
-image: python:3.11
 
+# Image Docker officielle pour Docker CLI
+image: docker:24.0.5
+
+# Service Docker-in-Docker
 services:
-  - docker:dind
+  - docker:24.0.5-dind
 
+# Variables pour Docker-in-Docker
 variables:
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: overlay2
 
+# -------------------------
+# BEFORE SCRIPT
+# -------------------------
 before_script:
-  - python --version
-  - pip install -r requirements.txt || true
+  # Installer Python et pip
+  - apk add --no-cache python3 py3-pip
+  - python3 --version
+  - pip3 install --upgrade pip
+  - pip3 install -r requirements.txt || true
 
 # -------------------------
 # TESTS
@@ -23,19 +33,23 @@ tests:
   stage: test
   script:
     - echo "Running tests for app"
-    - pip install pytest
+    - pip3 install pytest
     - pytest || echo "No tests yet"
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
 
 # -------------------------
-# BUILD EXE
+# BUILD CONTAINER
 # -------------------------
 build_container:
   stage: build
   script:
+    - docker info  # vérifier que Docker fonctionne
     - docker build -t pasta-web:local .
 
+# -------------------------
+# RUN CONTAINER
+# -------------------------
 run_container:
   stage: release
   script:
