@@ -21,6 +21,8 @@ before_script:
 # TESTS PYTHON
 # -------------------------
 tests:
+  tags:
+    - dockerbr
   stage: test
   script:
     - echo "Running Python tests"
