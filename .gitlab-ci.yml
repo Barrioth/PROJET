@@ -32,16 +32,9 @@ tests:
 # -------------------------
 # BUILD CONTAINER
 # -------------------------
-build_container:
-  stage: build
-  script:
-    - docker info  # vérifier que Docker fonctionne
-    - docker build -t pasta-web:local .
-
-# -------------------------
-# RUN CONTAINER
-# -------------------------
 run_container:
   stage: release
   script:
+    - docker info
+    - docker build -t pasta-web:local .
     - docker run --rm -p 8000:8000 pasta-web:local
