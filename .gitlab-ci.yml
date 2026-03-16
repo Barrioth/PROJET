@@ -34,6 +34,9 @@ tests:
 # -------------------------
 run_container:
   stage: release
+  tags:
+    - docker
+    - docker build and run 
   script:
     - docker info
     - docker build -t pasta-web:local .
