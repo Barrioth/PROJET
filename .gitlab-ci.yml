@@ -2,8 +2,15 @@ stages:
   - test
   - build
   - release
-
+  
 image: python:3.11
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_TLS_CERTDIR: ""
 
 before_script:
   - python --version
@@ -15,7 +22,7 @@ before_script:
 tests:
   stage: test
   script:
-    - echo "Running tests for PASTA app"
+    - echo "Running tests for app"
     - pip install pytest
     - pytest || echo "No tests yet"
   rules:
@@ -24,12 +31,12 @@ tests:
 # -------------------------
 # BUILD EXE
 # -------------------------
-build container:
+build_container:
   stage: build
   script:
     - docker build -t pasta-web:local .
 
-run container:
-  stage: run
+run_container:
+  stage: release
   script:
     - docker run --rm -p 8000:8000 pasta-web:local
