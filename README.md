@@ -12,6 +12,8 @@ docker build -t pasta-web:local .
 docker run --rm -p 8000:8000 pasta-web:local
 #http://127.0.0.1:8000/
           
+#runners
+PS C:\GitLab-Runner> .\gitlab-runner.exe run
 
 #pour declencher le CI
 #git remote -v
