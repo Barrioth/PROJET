@@ -3,36 +3,27 @@ stages:
   - build
   - release
 
-# Image Docker officielle pour Docker CLI
-image: docker:24.0.5
+image: docker:24.0.5  # image Docker avec docker CLI
 
-# Service Docker-in-Docker
 services:
-  - docker:24.0.5-dind
+  - docker:dind  # Docker-in-Docker pour build et run des containers
 
-# Variables pour Docker-in-Docker
 variables:
   DOCKER_HOST: tcp://docker:2375/
-  DOCKER_TLS_CERTDIR: ""
-  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""  # désactive TLS pour DIND simple
 
-# -------------------------
-# BEFORE SCRIPT
-# -------------------------
 before_script:
-  # Installer Python et pip
-  - apk add --no-cache python3 py3-pip
+  - apk add --no-cache python3 py3-pip  # installe Python si besoin
   - python3 --version
-  - pip3 install --upgrade pip
   - pip3 install -r requirements.txt || true
 
 # -------------------------
-# TESTS
+# TESTS PYTHON
 # -------------------------
 tests:
   stage: test
   script:
-    - echo "Running tests for app"
+    - echo "Running Python tests"
     - pip3 install pytest
     - pytest || echo "No tests yet"
   rules:

@@ -16,4 +16,4 @@ docker run --rm -p 8000:8000 pasta-web:local
 #pour declencher le CI
 #git remote -v
 #git remote add gitlab https://gitlab.com/Barrioth/PROJET.git
-#git push gitlab main
+#git push gitlab 1
