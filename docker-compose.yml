@@ -1,0 +1,21 @@
+services:
+
+  flask-app:
+    build: .
+    container_name: pasta-flask
+    expose:
+      - "8000"
+    environment:
+      - PORT=8000
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: pasta-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - flask-app
+    restart: unless-stopped

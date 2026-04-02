@@ -22,3 +22,7 @@ prthomas.up.railway.app
 #git remote -v
 #git remote add gitlab https://gitlab.com/Barrioth/PROJET.git
 #git push gitlab 1
+
+#Ajout de Nginx necessite wsl (nginx port 80) (flask port 8000)
+docker compose up --build
+http://localhost/
