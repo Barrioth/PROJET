@@ -15,6 +15,9 @@ docker run --rm -p 8000:8000 pasta-web:local
 #runners
 PS C:\GitLab-Runner> .\gitlab-runner.exe run
 
+#railway prends les push et automatise le deployment
+prthomas.up.railway.app
+
 #pour declencher le CI
 #git remote -v
 #git remote add gitlab https://gitlab.com/Barrioth/PROJET.git
