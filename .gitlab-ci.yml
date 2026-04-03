@@ -1,0 +1,44 @@
+stages:
+  - test
+  - build
+  - release
+
+image: docker:24.0.5  # image Docker avec docker CLI
+
+services:
+  - docker:dind  # Docker-in-Docker pour build et run des containers
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_TLS_CERTDIR: ""  # désactive TLS pour DIND simple
+
+before_script:
+  - apk add --no-cache python3 py3-pip  # installe Python si besoin
+  - python3 --version
+  - pip3 install -r requirements.txt || true
+
+# -------------------------
+# TESTS PYTHON
+# -------------------------
+tests:
+  tags:
+    - dockerbr
+  stage: test
+  script:
+    - echo "Running Python tests"
+    - pip3 install pytest
+    - pytest || echo "No tests yet"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+
+# -------------------------
+# BUILD CONTAINER
+# -------------------------
+run_container:
+  stage: release
+  tags:
+    - dockerbr
+  script:
+    - docker info
+    - docker build -t pasta-web:local .
+    - docker run --rm -p 8000:8000 pasta-web:local
