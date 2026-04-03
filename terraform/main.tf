@@ -29,7 +29,7 @@ resource "oci_core_instance" "pasta_web_server" {
   }
 
   metadata = {
-    ssh_authorized_keys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3riGjl6ULQHiKWQYzrI4vUmPcPTCIyQlTzRAIHTck2tulRWpQPUkCDvegW4yN3rwNi2jQC63DZ5nRU+c9EbjnKqI2iYkVaKHrzMPHpAE+wgh2TAe+cQ3wgd2S59zsQCnRYjxteKs36cntQ6fTuJK0eVMc4MX3DowZck/gQCrTeNFL9h8JPSF6LRKYzm0zIrdMxBIJ5NwVoG80N6QVTeoOvU9yhtjUhYt3wF2jeLAQIiieWCo5LCEyvtxspL5kcaAXPS8JY8mG9RkmZhPMx0Ct80WuPEMCiT0W2ypmvvgdAEOpErcJkarOYT6LueS+MoFZbGLxDQv8Psn0KQG/WAl/QIDAQAB"
+    ssh_authorized_keys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPF7IUTXQUZVPY6oKLNZbF3INAumvGR7gyfE/38Sl0XTExJQH9GX9nwwP6eoesGKVHz7NNmiGVxk/ja0ZQX2Yc+mekAGdHBrKz977lrefORKwcRk741Hd5ayIEmF2topsm23s5/Yi7cB/LIVDYVAUreulZWa6FznyCueIX7GOlLJcvmSBj6Gm+7mB5+AjiRXvmd0FOpJtBO+eVl3Rzhfp1dv4iXa/7teO6WC01n4WxALKHtncGLdm+4CLnzDBK8r0v3ArKYN7moJzEKYHo/UrRtANpybNLi2bjCsiV77Uo9Kcen+BEP8G9tvB4/5v3//quMp+8YQD/VqBfAHT1zCuX"
   }
 
   freeform_tags = {

@@ -12,5 +12,5 @@ provider "oci" {
   user_ocid         = var.user_ocid
   fingerprint       = var.fingerprint
   private_key_path  = var.private_key_path
-  region            = "eu-paris-1"   # ta région
+  region            = "eu-paris-1"
 }
