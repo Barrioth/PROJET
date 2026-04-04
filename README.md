@@ -58,10 +58,18 @@ terraform apply
 
 terraform output public_ip
 
-WSL
-sudo apt install ansible -y
-
 ssh-keygen -t rsa -f ~/.ssh/id_rsa -N ""
 
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N "" -C "lagia@FIXE"
 cat ~/.ssh/id_ed25519.pub
+
+
+wsl
+sudo apt install ansible -y
+
+cp /mnt/c/Users/Lagia/.ssh/id_ed25519_pasta ~/.ssh/
+cp /mnt/c/Users/Lagia/.ssh/id_ed25519_pasta.pub ~/.ssh/
+chmod 600 ~/.ssh/id_ed25519_pasta
+
+cd /mnt/c/Users/Lagia/Desktop/DOSSIER\ PROJET/PROJET
+ansible-playbook playbook.yml -i terraform/inventory.ini

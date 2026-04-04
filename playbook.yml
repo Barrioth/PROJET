@@ -1,6 +1,6 @@
 ---
 - name: Deploy Pasta Flask + Nginx
-  hosts: pasta
+  hosts: all
   become: yes
   tasks:
 
@@ -27,7 +27,7 @@
       git:
         repo: https://github.com/Barrioth/PROJET.git
         dest: /home/ubuntu/pasta
-        version: 3
+        version: 4
 
     - name: Copy app files if needed
       copy:
