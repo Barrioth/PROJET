@@ -1,5 +1,5 @@
 # ================================
-# Création de la VM Pasta Web (Oracle Always Free - Paris)
+# Création de la VM Pasta Web (OAF - Paris)
 # ================================
 
 data "oci_identity_availability_domain" "ad" {
@@ -19,7 +19,7 @@ resource "oci_core_instance" "pasta_web_server" {
   }
 
   create_vnic_details {
-    subnet_id        = var.subnet_id
+    subnet_id       = var.subnet_id
     assign_public_ip = true
   }
 
@@ -29,7 +29,7 @@ resource "oci_core_instance" "pasta_web_server" {
   }
 
   metadata = {
-    ssh_authorized_keys = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3riGjl6ULQHiKWQYzrI4vUmPcPTCIyQlTzRAIHTck2tulRWpQPUkCDvegW4yN3rwNi2jQC63DZ5nRU+c9EbjnKqI2iYkVaKHrzMPHpAE+wgh2TAe+cQ3wgd2S59zsQCnRYjxteKs36cntQ6fTuJK0eVMc4MX3DowZck/gQCrTeNFL9h8JPSF6LRKYzm0zIrdMxBIJ5NwVoG80N6QVTeoOvU9yhtjUhYt3wF2jeLAQIiieWCo5LCEyvtxspL5kcaAXPS8JY8mG9RkmZhPMx0Ct80WuPEMCiT0W2ypmvvgdAEOpErcJkarOYT6LueS+MoFZbGLxDQv8Psn0KQG/WAl/QIDAQAB"
+    ssh_authorized_keys = file("~/.oci/id_rsa.pub")
   }
 
   freeform_tags = {
@@ -38,7 +38,7 @@ resource "oci_core_instance" "pasta_web_server" {
   }
 }
 
-# Outputs très utiles
+# Outputs
 output "public_ip" {
   value       = oci_core_instance.pasta_web_server.public_ip
   description = "IP publique de ton serveur"
