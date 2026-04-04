@@ -40,3 +40,28 @@ Get-Command terraform
 terraform init 
 terraform plan (terraform validate si ca passe pas)
 terraform apply
+
+
+
+
+
+
+GCP
+https://cloud.google.com/sdk/docs/install
+gcloud init                                     si ca ne se lance pas automatiquement apres l'install sdk
+gcloud auth application-default login
+instaler compute engine API
+
+terraform init 
+terraform plan (terraform validate si ca passe pas)
+terraform apply
+
+terraform output public_ip
+
+WSL
+sudo apt install ansible -y
+
+ssh-keygen -t rsa -f ~/.ssh/id_rsa -N ""
+
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N "" -C "lagia@FIXE"
+cat ~/.ssh/id_ed25519.pub

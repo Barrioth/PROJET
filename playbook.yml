@@ -1,0 +1,40 @@
+---
+- name: Deploy Pasta Flask + Nginx
+  hosts: pasta
+  become: yes
+  tasks:
+
+    - name: Update system
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install Docker + dependencies
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+          - git
+        state: present
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Clone ton repo (ou copy files)
+      git:
+        repo: https://github.com/Barrioth/PROJET.git
+        dest: /home/ubuntu/pasta
+        version: 3
+
+    - name: Copy app files if needed
+      copy:
+        src: ./app/
+        dest: /home/ubuntu/pasta/app/
+
+    - name: Deploy with docker-compose
+      command: docker-compose -f /home/ubuntu/pasta/docker-compose.yml up -d --build
+      args:
+        chdir: /home/ubuntu/pasta
