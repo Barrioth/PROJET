@@ -2,27 +2,93 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Sélection de Plats de Pâtes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍝 Pasta Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Sélection de Plats de Pâtes</h1>
-    <form method="post">
-        <label for="dishes">Choisissez un ou plusieurs plats :</label><br>
-        <select name="dishes" id="dishes" multiple size="10">
-            {% for dish in dishes %}
-            <option value="{{ dish }}">{{ dish }}</option>
-            {% endfor %}
-        </select><br><br>
 
-        <label for="num_people">Nombre de personnes :</label>
-        <input type="number" name="num_people" id="num_people" min="1" value="1"><br><br>
+    <header>
+        <div class="header-inner">
+            <p class="subtitle">La cucina di casa</p>
+            <h1>Pasta <em>Planner</em></h1>
+            <p class="tagline">Choisissez vos plats, on calcule les ingrédients.</p>
+        </div>
+        <div class="steam s1"></div>
+        <div class="steam s2"></div>
+        <div class="steam s3"></div>
+    </header>
 
-        <button type="submit">Calculer les ingrédients</button>
-    </form>
+    <main>
+        <form method="post" id="pasta-form">
 
-    <div class="result">
-        {{ result|safe }}
-    </div>
+            <!-- Nombre de personnes -->
+            <section class="people-section">
+                <label>Combien de convives ?</label>
+                <div class="counter">
+                    <button type="button" class="counter-btn" onclick="changeCount(-1)">−</button>
+                    <input type="number" name="num_people" id="num_people" min="1" max="50" value="1" readonly>
+                    <button type="button" class="counter-btn" onclick="changeCount(1)">+</button>
+                </div>
+            </section>
+
+            <!-- Sélection des plats -->
+            <section class="dishes-section">
+                <label>Choisissez vos plats <span class="hint">(plusieurs possibles)</span></label>
+                <div class="dishes-grid">
+                    {% for dish in dishes %}
+                    <label class="dish-card">
+                        <input type="checkbox" name="dishes" value="{{ dish }}">
+                        <span class="dish-icon">🍝</span>
+                        <span class="dish-name">{{ dish }}</span>
+                        <span class="checkmark">✓</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Bouton -->
+            <div class="submit-wrap">
+                <button type="submit" class="submit-btn">
+                    <span>Calculer les ingrédients</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+        </form>
+
+        <!-- Résultats -->
+        {% if result %}
+        <section class="results">
+            <h2>🛒 Liste de courses</h2>
+            <div class="results-content">
+                {{ result|safe }}
+            </div>
+        </section>
+        {% endif %}
+
+    </main>
+
+    <footer>
+        <p>Buon appetito &nbsp;🫶</p>
+    </footer>
+
+    <script>
+        function changeCount(delta) {
+            const input = document.getElementById('num_people');
+            const val = parseInt(input.value) + delta;
+            if (val >= 1 && val <= 50) input.value = val;
+        }
+
+        // Highlight selected cards
+        document.querySelectorAll('.dish-card input').forEach(cb => {
+            cb.addEventListener('change', () => {
+                cb.closest('.dish-card').classList.toggle('selected', cb.checked);
+            });
+        });
+    </script>
+
 </body>
 </html>

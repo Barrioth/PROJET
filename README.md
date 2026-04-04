@@ -73,3 +73,4 @@ chmod 600 ~/.ssh/id_ed25519_pasta
 
 cd /mnt/c/Users/Lagia/Desktop/DOSSIER\ PROJET/PROJET
 ansible-playbook playbook.yml -i terraform/inventory.ini
+ansible-playbook playbook.yml -i terraform/inventory.ini --private-key ~/.ssh/id_ed25519_pasta

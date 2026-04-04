@@ -26,14 +26,20 @@
     - name: Clone ton repo (ou copy files)
       git:
         repo: https://github.com/Barrioth/PROJET.git
-        dest: /home/ubuntu/pasta
-        version: 4
+        dest: /home/guillian_mt4/pasta
+        version: 5
 
     - name: Copy app files if needed
       copy:
         src: ./app/
         dest: /home/ubuntu/pasta/app/
 
+    - name: Stop et supprimer les anciens containers
+      command: docker-compose -f /home/ubuntu/pasta/docker-compose.yml down --remove-orphans
+      args:
+        chdir: /home/ubuntu/pasta
+      ignore_errors: yes
+      
     - name: Deploy with docker-compose
       command: docker-compose -f /home/ubuntu/pasta/docker-compose.yml up -d --build
       args:
