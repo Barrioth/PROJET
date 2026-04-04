@@ -1,7 +1,0 @@
-tenancy_ocid       = "ocid1.tenancy.oc1..aaaaaaaaireg6akiqqst43gibrnpsuthtvfhi6vuutet24yppkbesjac4ixq"
-user_ocid          = "ocid1.user.oc1..aaaaaaaajct6eugtsvl4l37mu5us2xeq7sogndplzb24ysvqpuls47oel2ga"
-fingerprint        = "b6:ba:cb:31:84:89:56:85:a8:48:f3:6e:d8:a6:d3:3e"
-private_key_path   = "C:\\Users\\Lagia\\.oci\\oci_api_key.pem"
-compartment_id     = "ocid1.tenancy.oc1..aaaaaaaaireg6akiqqst43gibrnpsuthtvfhi6vuutet24yppkbesjac4ixq"
-ssh_public_key_path = "C:\\Users\\Lagia\\.ssh\\id_rsa.pub"
-subnet_id          = "ocid1.subnet.oc1.eu-paris-1.aaaaaaaaekdnmpnvhoecp6fxhupqtmhyjty2mg6sraoz6d4doh5jv5tzspha"
