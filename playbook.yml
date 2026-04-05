@@ -1,20 +1,25 @@
 ---
-- name: Deploy Pasta Flask + Nginx
+- name: Deploy Pasta Flask + Nginx + HTTPS
   hosts: all
   become: yes
-  tasks:
+  vars:
+    domain: "34.10.121.133.nip.io"
+    email: "guillian_mt4@gmail.com"
+    repo_dest: /home/ubuntu/pasta
 
+  tasks:
     - name: Update system
       apt:
         update_cache: yes
         upgrade: yes
 
-    - name: Install Docker + dependencies
+    - name: Install Docker and dependencies
       apt:
         name:
           - docker.io
           - docker-compose
           - git
+          - certbot
         state: present
 
     - name: Start Docker
@@ -23,24 +28,44 @@
         state: started
         enabled: yes
 
-    - name: Clone ton repo (ou copy files)
+    - name: Stop and remove old containers
+      command: docker-compose -f {{ repo_dest }}/docker-compose.yml down --remove-orphans
+      args:
+        chdir: "{{ repo_dest }}"
+      ignore_errors: yes
+
+    - name: Clone repo
       git:
         repo: https://github.com/Barrioth/PROJET.git
-        dest: /home/guillian_mt4/pasta
-        version: 5
+        dest: "{{ repo_dest }}"
+        version: "6"
+        force: yes
 
-    - name: Copy app files if needed
-      copy:
-        src: ./app/
-        dest: /home/ubuntu/pasta/app/
+    - name: Get Let's Encrypt certificate (standalone)
+      command: >
+        certbot certonly --standalone
+        -d {{ domain }}
+        --email {{ email }}
+        --agree-tos
+        --non-interactive
+      args:
+        creates: /etc/letsencrypt/live/{{ domain }}/fullchain.pem
 
-    - name: Stop et supprimer les anciens containers
-      command: docker-compose -f /home/ubuntu/pasta/docker-compose.yml down --remove-orphans
+    - name: Fix letsencrypt permissions
+      file:
+        path: /etc/letsencrypt
+        state: directory
+        recurse: yes
+        mode: '0755'
+
+    - name: Deploy docker-compose
+      command: docker-compose -f {{ repo_dest }}/docker-compose.yml up -d --build
       args:
-        chdir: /home/ubuntu/pasta
-      ignore_errors: yes
-      
-    - name: Deploy with docker-compose
-      command: docker-compose -f /home/ubuntu/pasta/docker-compose.yml up -d --build
-      args:
-        chdir: /home/ubuntu/pasta
+        chdir: "{{ repo_dest }}"
+
+    - name: Cron certbot renew
+      cron:
+        name: "Certbot renew"
+        minute: "0"
+        hour: "3"
+        job: "certbot renew --quiet && docker restart pasta-nginx"

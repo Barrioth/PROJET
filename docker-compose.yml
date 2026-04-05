@@ -14,8 +14,10 @@ services:
     container_name: pasta-nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - flask-app
     restart: unless-stopped
