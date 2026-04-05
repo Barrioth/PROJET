@@ -23,7 +23,8 @@ prthomas.up.railway.app
 #pour declencher le CI
 #git remote -v
 #git remote add gitlab https://gitlab.com/Barrioth/PROJET.git
-#git push gitlab 1 ou 2
+#git commit --allow-empty -m "trigger CI"
+#git push 
 
 #Ajout de Nginx necessite wsl (nginx port 80) (flask port 8000)
 docker compose up --build
