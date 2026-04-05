@@ -38,7 +38,7 @@
       git:
         repo: https://github.com/Barrioth/PROJET.git
         dest: "{{ repo_dest }}"
-        version: "8"
+        version: "9"
         force: yes
 
     - name: Get Let's Encrypt certificate (standalone)
