@@ -53,4 +53,4 @@ deploy_production:
     - echo "Deploying to GCP VM..."
     - ansible-playbook -i terraform/inventory.ini playbook.yml
   rules:
-    - if: $CI_COMMIT_BRANCH == "8"
+    - if: $CI_COMMIT_BRANCH == "9"
