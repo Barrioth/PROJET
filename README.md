@@ -15,7 +15,9 @@ docker run --rm -p 8000:8000 pasta-web:local
 #http://127.0.0.1:8000/
           
 #runners
-PS C:\GitLab-Runner> .\gitlab-runner.exe run
+PS
+cd C:\GitLab-Runner
+.\gitlab-runner.exe run
 
 #railway prends les push et automatise le deployment
 prthomas.up.railway.app
@@ -24,7 +26,7 @@ prthomas.up.railway.app
 #git remote -v
 #git remote add gitlab https://gitlab.com/Barrioth/PROJET.git
 #git commit --allow-empty -m "trigger CI"
-#git push 
+#git push gitlab 9
 
 #Ajout de Nginx necessite wsl (nginx port 80) (flask port 8000)
 docker compose up --build
