@@ -28,7 +28,7 @@ resource "google_compute_instance" "pasta-vm" {
   network_interface {
     network = "default"
     access_config {
-      nat_ip = google_compute_address.pasta_ip.addres
+      nat_ip = google_compute_address.pasta_ip.address
     }
   }
 

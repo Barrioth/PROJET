@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   vars:
-    domain: "34.10.121.133.nip.io"
+    domain: "136.115.23.69.nip.io"
     email: "guillian_mt4@gmail.com"
     repo_dest: /home/ubuntu/pasta
 
