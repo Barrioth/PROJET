@@ -17,6 +17,6 @@ deploy_production:
   tags:
     - dockerbr
   script:
-    - wsl bash -c "sudo ansible-playbook -i /mnt/c/GitLab-Runner/builds/Rfzfr-AOv/0/Barrioth/PROJET/terraform/inventory.ini /mnt/c/GitLab-Runner/builds/Rfzfr-AOv/0/Barrioth/PROJET/playbook.yml"
+    - wsl bash -c "sudo ansible-playbook -v -i /mnt/c/GitLab-Runner/builds/Rfzfr-AOv/0/Barrioth/PROJET/terraform/inventory.ini /mnt/c/GitLab-Runner/builds/Rfzfr-AOv/0/Barrioth/PROJET/playbook.yml"
   rules:
     - if: $CI_COMMIT_BRANCH == "9"
