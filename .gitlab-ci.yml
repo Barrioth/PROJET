@@ -9,8 +9,6 @@ tests:
   script:
     - echo "Running tests"
     - python --version
-    - pip install pytest
-    - pytest || echo "No tests yet"
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
 
@@ -19,9 +17,8 @@ deploy_production:
   tags:
     - dockerbr
   script:
-    - pip install ansible
-    - New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.ssh"
-    - $env:SSH_PRIVATE_KEY | Out-File -FilePath "$env:USERPROFILE\.ssh\id_ed25519_pasta" -Encoding ascii
-    - ansible-playbook -i terraform/inventory.ini playbook.yml
+    - wsl mkdir -p ~/.ssh
+    - $env:SSH_PRIVATE_KEY | wsl bash -c "cat > ~/.ssh/id_ed25519_pasta && chmod 600 ~/.ssh/id_ed25519_pasta"
+    - wsl bash -c "cd /mnt/c/GitLab-Runner/builds/Rfzfr-AOv/0/Barrioth/PROJET && ansible-playbook -i terraform/inventory.ini playbook.yml"
   rules:
     - if: $CI_COMMIT_BRANCH == "9"
