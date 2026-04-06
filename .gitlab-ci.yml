@@ -2,34 +2,26 @@ stages:
   - test
   - deploy
 
-# -------------------------
-# TESTS PYTHON
-# -------------------------
 tests:
   stage: test
   tags:
     - dockerbr
   script:
-    - echo "Running Python tests"
-    - python3 -m pytest || echo "No tests yet"
+    - echo "Running tests"
+    - python --version
+    - pip install pytest
+    - pytest || echo "No tests yet"
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
 
-# -------------------------
-# DEPLOY VIA ANSIBLE
-# -------------------------
 deploy_production:
   stage: deploy
   tags:
     - dockerbr
-  before_script:
-    - apt-get update -qq && apt-get install -y openssh-client python3 python3-pip
-    - pip3 install ansible --break-system-packages
-    - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519_pasta
-    - chmod 600 ~/.ssh/id_ed25519_pasta
   script:
-    - echo "Deploying to GCP VM..."
+    - pip install ansible
+    - New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.ssh"
+    - $env:SSH_PRIVATE_KEY | Out-File -FilePath "$env:USERPROFILE\.ssh\id_ed25519_pasta" -Encoding ascii
     - ansible-playbook -i terraform/inventory.ini playbook.yml
   rules:
     - if: $CI_COMMIT_BRANCH == "9"
