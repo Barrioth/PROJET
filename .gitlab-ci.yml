@@ -1,51 +1,30 @@
 stages:
   - test
-  - build
   - deploy
 
-image: docker:24.0.5
-services:
-  - docker:dind
-
-variables:
-  DOCKER_HOST: tcp://docker:2375/
-  DOCKER_TLS_CERTDIR: ""
-
-before_script:
-  - apk add --no-cache python3 py3-pip
-  - python3 --version
-  - pip3 install -r requirements.txt || true
-
+# -------------------------
+# TESTS PYTHON
+# -------------------------
 tests:
+  stage: test
   tags:
     - dockerbr
-  stage: test
   script:
     - echo "Running Python tests"
-    - pip3 install pytest
-    - pytest || echo "No tests yet"
+    - python3 -m pytest || echo "No tests yet"
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
 
-build_container:
-  stage: build
-  tags:
-    - dockerbr
-  script:
-    - docker info
-    - docker build -t pasta-web:local .
-    - echo "Build OK"
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
-
+# -------------------------
+# DEPLOY VIA ANSIBLE
+# -------------------------
 deploy_production:
   stage: deploy
   tags:
     - dockerbr
-  image: python:3.11-slim
   before_script:
-    - apt-get update -qq && apt-get install -y openssh-client
-    - pip install ansible
+    - apt-get update -qq && apt-get install -y openssh-client python3 python3-pip
+    - pip3 install ansible --break-system-packages
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519_pasta
     - chmod 600 ~/.ssh/id_ed25519_pasta
