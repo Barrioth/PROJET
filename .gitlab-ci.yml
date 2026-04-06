@@ -18,8 +18,7 @@ deploy_production:
     - dockerbr
   script:
     - wsl mkdir -p ~/.ssh
-    - $env:SSH_KEY_B64 | Out-File -FilePath "C:\GitLab-Runner\key.b64" -Encoding ascii -NoNewline
-    - wsl bash -c "base64 -d /mnt/c/GitLab-Runner/key.b64 > ~/.ssh/id_ed25519_pasta && chmod 600 ~/.ssh/id_ed25519_pasta && rm /mnt/c/GitLab-Runner/key.b64"
+    - wsl bash -c "cat /home/lagia/.ssh/id_ed25519_pasta > /home/qurupeco/.ssh/id_ed25519_pasta && chmod 600 /home/qurupeco/.ssh/id_ed25519_pasta"
     - wsl bash -c "cd /mnt/c/GitLab-Runner/builds/Rfzfr-AOv/0/Barrioth/PROJET && ansible-playbook -i terraform/inventory.ini playbook.yml"
   rules:
     - if: $CI_COMMIT_BRANCH == "9"
