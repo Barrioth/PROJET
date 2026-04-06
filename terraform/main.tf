@@ -8,7 +8,7 @@ resource "google_compute_firewall" "allow_http_ssh" {
   network = "default"
   allow {
     protocol = "tcp"
-    ports    = ["22", "80", "443"]
+    ports    = ["22", "80", "443", "3001"]
   }
   source_ranges = ["0.0.0.0/0"]
 }
