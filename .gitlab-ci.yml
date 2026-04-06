@@ -20,6 +20,8 @@ deploy_production:
     - wsl mkdir -p ~/.ssh
     - $wslpath = wsl wslpath ($env:SSH_PRIVATE_KEY -replace '\\', '/')
     - wsl bash -c "tr -d '\r' < $wslpath > ~/.ssh/id_ed25519_pasta && chmod 600 ~/.ssh/id_ed25519_pasta"
+    - wsl bash -c "cat ~/.ssh/id_ed25519_pasta | xxd | head -5"
+    - wsl bash -c "wc -l ~/.ssh/id_ed25519_pasta"
     - wsl bash -c "cd /mnt/c/GitLab-Runner/builds/Rfzfr-AOv/0/Barrioth/PROJET && ansible-playbook -i terraform/inventory.ini playbook.yml"
   rules:
     - if: $CI_COMMIT_BRANCH == "9"
