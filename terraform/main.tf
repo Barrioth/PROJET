@@ -33,7 +33,7 @@ resource "google_compute_instance" "pasta-vm" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("C:/Users/Lagia/.ssh/id_ed25519_pasta.pub")}"
+  ssh-keys = "ubuntu:${file("C:/Users/Lagia/.ssh/id_ed25519_pasta.pub")}\nubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBQiOoTC5e526d4+saIu0E1i9sJ2fEt8Bw8BzltB1TV pasta-deploy"
   }
 
   tags = ["http-server", "ssh"]
